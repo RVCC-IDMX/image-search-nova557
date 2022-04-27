@@ -1,4 +1,6 @@
 const form = document.querySelector('.search-form');
+const tmp = document.querySelector('#template');
+const cnt = document.querySelector('.container');
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -13,6 +15,21 @@ form.addEventListener('submit', async (event) => {
   })
     .then((res) => res.json())
     .catch((err) => console.error(err));
+
+  // console.log(response.results);
+
+  response.results.forEach((result) => {
+    console.log(result.user.name);
+    console.log(result.urls.small);
+    console.log(result.description);
+    const clone = tmp.content.cloneNode(true);
+    const img = clone.querySelector('.post__img');
+    img.src = result.urls.small;
+    const user = clone.querySelector('.post__user');
+    user.innerText = result.user.name;
+
+    cnt.appendChild(clone);
+  });
 
   /*
   some sample code
